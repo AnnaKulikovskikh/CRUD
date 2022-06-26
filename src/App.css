@@ -1,0 +1,126 @@
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  padding: 20px;
+  height: 100vh;
+  display: flex;
+}
+
+label {
+  margin: 10px;
+}
+
+input {
+  margin: 5px;
+}
+
+.clocks {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+  margin-top: 50px;
+  margin-left: 50px;
+}
+
+.clock {
+  display: flex;
+  flex-direction: column;
+  width: 150px;
+  margin-right: 10%;
+  align-items: center;
+}
+
+.clockHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.cross {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: black solid 1px;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+.analog-clock{
+  width: 150px;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border: 3px solid darkblue;
+  margin-bottom: 30px;
+}
+
+.analog-clock:before{
+  content: '';
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  background-color:darkblue;
+  border-radius: 50%;
+  z-index: 999;
+}
+
+.analog-clock .hour,
+.analog-clock .min,
+.analog-clock .sec{
+  position: absolute;
+}
+
+.analog-clock .hour, .hr{
+  width: 159px;
+  height: 159px;
+}
+.analog-clock .min, .mn{
+  width: 160px;
+  height: 160px;
+}
+.analog-clock .sec, .sc{
+  width: 160px;
+  height: 160px;
+}
+
+.hr, .mn, .sc{
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  border-radius: 50%;
+}
+
+.hr:before{
+  content: '';
+  position: absolute;
+  width: 7px;
+  height: 80px;
+  background-color: darkblue;
+  z-index: 10;
+  border-radius: 6px 6px 0 0;
+}
+.mn:before{
+  content: '';
+  position: absolute;
+  width: 4px;
+  height: 90px;
+  background-color: blue;
+  z-index: 11;
+  border-radius: 6px 6px 0 0;
+}
+.sc:before{
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 100px;
+  background-color:darkslateblue;
+  z-index: 12;
+  border-radius: 6px 6px 0 0;
+}
