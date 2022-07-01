@@ -1,59 +1,68 @@
 import { useState } from 'react'
+import { useEffect } from 'react'
 import { nanoid } from 'nanoid'
 import './App.css'
-import Clock from "./components/Clock"
+import Note from "./components/Note"
 
 function App() {
-  //const [clock, setClock] = useState([{id: nanoid(), name: "Moskow", zone: 3}])
-  const [clock, setClock] = useState([])
 
-  const addClock = event => {
-    
+  const [allNotes, setNotes] = useState([])
+
+  // fetch ("http://localhost:7777/notes")
+  //   .then(res => res.json())
+  //   .then(data => {
+  //     setNotes(prev => {
+  //       [...prev, JSON.parse(data)]
+  //     })
+  //   })
+
+  //const [allNotes, setNotes] = useState(() => JSON.parse(localStorage.getItem("notes")) || [])
+
+  // useEffect(() => {
+  //   localStorage.setItem("notes", JSON.stringify(allNotes))
+  // }, [allNotes])
+
+  function addNote(event) {
     event.preventDefault()
-    if (event.target.name.value === '' || event.target.zone.value === '') return null
-    const add = { 
+    if (!document.querySelector(".addArea").value) return null
+    const add = {
       id: nanoid(),
-      name: event.target.name.value.trim(), 
-      zone: event.target.zone.value.trim()
+      text: document.querySelector(".addArea").value
     }
-    event.target.name.value = ""
-    event.target.zone.value = ""
-    setClock(prevForm => [...prevForm, add])
+    document.querySelector(".addArea").value = ""
+    setNotes(prev => [...prev, add])
   }
 
-  function deleteClock(event, clockId) {
+  function delNote(event, noteId) {
     event.stopPropagation()
-    setClock(prevClock => prevClock.filter(clo => clo.id !== clockId))
+    setNotes(prev => prev.filter(note => note.id !== noteId))
   }
-  
-  const clocks = clock.map(item => {
-    return (
-      <Clock
-        key={item.id}
-        id={item.id}
-        name={item.name}
-        zone={item.zone}
-        deleteClock={deleteClock}
+
+  const notes = allNotes.map(note => {
+    return(
+      <Note 
+        key={note.id}
+        id={note.id}
+        text={note.text}
+        delNote={delNote}
       />
     )
   })
 
   return (
     <div className='app'>
-      <form className='form' onSubmit={addClock}>
-        <label>
-          <span>Название</span>
-          <input name='name'/>
-        </label>
-        <label>
-          <span>Временная зона</span>
-          <input name='zone' type='number'/>
-        </label>
-        <button type='submit'>Добавить</button>
-      </form>
-      <div className="clocks">
-        {clocks}
+      <div className="header">
+          <h1>Notes</h1>
+          <button className="refresh"><span>🗘</span></button>
       </div>
+      <div className='notes'>
+        {notes}
+      </div>
+      <h5>New Note</h5>
+      <form className="addNote" onSubmit={addNote}>
+        <textarea className="addArea"></textarea>
+        <button className="addBtn" type="submit">➤</button>
+      </form>
     </div>
   )
 }
