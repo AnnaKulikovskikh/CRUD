@@ -6,7 +6,25 @@ import Note from "./components/Note"
 
 function App() {
 
+  const url = "https://apis.scrimba.com/jsonplaceholder/posts"
+  //const url = "http://localhost:7777/notes"
   const [allNotes, setNotes] = useState([])
+
+  function load() {
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+          const nt = data.slice(0,2)
+          const loadNotes = []
+          for (let i of nt) {
+              loadNotes.push({key: i.id, id: i.id, text: i.title})
+          }
+          //console.log(allNotes)
+          //console.log(loadNotes)
+          setNotes(prev => [...prev, loadNotes])
+          //return loadNotes
+      })
+  } 
 
   // fetch ("http://localhost:7777/notes")
   //   .then(res => res.json())
@@ -53,7 +71,7 @@ function App() {
     <div className='app'>
       <div className="header">
           <h1>Notes</h1>
-          <button className="refresh"><span>🗘</span></button>
+          <button className="refresh" onClick={load}><span>🗘</span></button>
       </div>
       <div className='notes'>
         {notes}
