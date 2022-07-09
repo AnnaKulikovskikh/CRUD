@@ -38,7 +38,7 @@ function App() {
       text: document.querySelector(".addArea").value
     }
     document.querySelector(".addArea").value = ""
-    //setNotes(prev => [...prev, add])
+    setNotes(prev => [...prev, add])
 
     const options = {
       method: "POST",
@@ -46,11 +46,13 @@ function App() {
       headers: {"Content-Type": "application/json"}
     }
 
-    fetch(url + add.id, options)
+    // const url1 = `${url}: ${add.id}`
+    fetch(url, options)
         .then(res => res.json())
-        .then(data => {
-          setNotes(prev => [...prev, data])
-        })
+        .then(data => console.log(data))
+        // .then(data => {
+        //   setNotes(prev => [...prev, data])
+        //})
   }
 
   function delNote(event, noteId) {
