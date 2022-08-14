@@ -14,8 +14,7 @@ function App() {
     fetch(url)
       .then(res => res.json())
       .then(data => {
-          const nt = data.slice(0,2)
-          for (let i of nt) {
+          for (let i of data) {
             if (allNotes.find(note => note.id === i.id)) {
               continue
             }
@@ -48,8 +47,8 @@ function App() {
 
     // const url1 = `${url}: ${add.id}`
     fetch(url, options)
-        .then(res => res.json())
-        .then(data => console.log(data))
+        //.then(res => res.json())
+        //.then(data => console.log(data))
         // .then(data => {
         //   setNotes(prev => [...prev, data])
         //})
@@ -64,8 +63,8 @@ function App() {
     }
 
     fetch(url + noteId, options)
-        .then(res => res.json())
-        .then(data => {console.log(data)})
+        //.then(res => res.json())
+        //.then(data => {console.log(data)})
   }
 
   const notes = allNotes.map(note => {
