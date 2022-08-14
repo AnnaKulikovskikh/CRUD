@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 //import { useEffect } from 'react'
 import { nanoid } from 'nanoid'
 import './App.css'
@@ -29,14 +29,20 @@ function App() {
   //   localStorage.setItem("notes", JSON.stringify(allNotes))
   // }, [allNotes])
 
+  const nameField = useRef(null)
+
   function addNote(event) {
     event.preventDefault()
-    if (!document.querySelector(".addArea").value) return null
+    const addArea = nameField.current
+
+    //console.log(addArea)
+
+    if (!addArea.value) return null
     const add = {
       id: nanoid(),
-      text: document.querySelector(".addArea").value
+      text: addArea.value
     }
-    document.querySelector(".addArea").value = ""
+    addArea.value = ""
     setNotes(prev => [...prev, add])
 
     const options = {
@@ -89,7 +95,7 @@ function App() {
       </div>
       <h5>New Note</h5>
       <form className="addNote" onSubmit={addNote}>
-        <textarea className="addArea"></textarea>
+        <textarea className="addArea" ref={nameField}></textarea>
         <button className="addBtn" type="submit">➤</button>
       </form>
     </div>
