@@ -1,6 +1,5 @@
 import { useState, useRef } from 'react'
 //import { useEffect } from 'react'
-import { nanoid } from 'nanoid'
 import './App.css'
 import Note from "./components/Note"
 
@@ -8,7 +7,7 @@ function App() {
 
   const url = "http://localhost:7777/notes/"
   const [allNotes, setNotes] = useState([])
-  console.log(allNotes)
+  const [nextId, setNextId] = useState(0)
 
   function load() {
     fetch(url)
@@ -18,7 +17,8 @@ function App() {
             if (allNotes.find(note => note.id === i.id)) {
               continue
             }
-            setNotes(prev => [...prev, {id: i.id, text: i.title}])
+            setNotes(prev => [...prev, {id: i.id, text: i.text}])
+            setNextId(prevId => i.id + 1)
           }
       })
   } 
@@ -34,15 +34,16 @@ function App() {
   function addNote(event) {
     event.preventDefault()
     const addArea = nameField.current
-
-    //console.log(addArea)
+    addArea.focus()
 
     if (!addArea.value) return null
     const add = {
-      id: nanoid(),
+      id: nextId,
       text: addArea.value
     }
     addArea.value = ""
+    
+    setNextId(prevId => prevId + 1)
     setNotes(prev => [...prev, add])
 
     const options = {
@@ -51,13 +52,7 @@ function App() {
       headers: {"Content-Type": "application/json"}
     }
 
-    // const url1 = `${url}: ${add.id}`
     fetch(url, options)
-        //.then(res => res.json())
-        //.then(data => console.log(data))
-        // .then(data => {
-        //   setNotes(prev => [...prev, data])
-        //})
   }
 
   function delNote(event, noteId) {
@@ -69,8 +64,6 @@ function App() {
     }
 
     fetch(url + noteId, options)
-        //.then(res => res.json())
-        //.then(data => {console.log(data)})
   }
 
   const notes = allNotes.map(note => {
